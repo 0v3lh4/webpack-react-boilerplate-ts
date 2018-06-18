@@ -1,9 +1,10 @@
-const merge = require("webpack-merge")
-const webpack = require("webpack")
-const base = require("./webpack.base")
-const WebpackDevServer = require("webpack-dev-server")
-const path = require("path")
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const merge = require("webpack-merge");
+const webpack = require("webpack");
+const base = require("./webpack.base");
+const WebpackDevServer = require("webpack-dev-server");
+const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const LISTEN_PORT = 3000;
 
 const devConfig = merge({
   mode: "development",
@@ -12,7 +13,7 @@ const devConfig = merge({
 
   entry: {
     app: [
-      "webpack-dev-server/client?http://0.0.0.0:3000",
+      `webpack-dev-server/client?http://0.0.0.0:${LISTEN_PORT}`,
       "webpack/hot/only-dev-server"
     ]
   },
@@ -39,12 +40,6 @@ const devConfig = merge({
 
   module: {
     rules: [{
-      enforce: "pre",
-      test: /\.ts[x]?$/,
-      include: path.join(__dirname, "src"),
-      exclude: /node_modules/,
-      loader: "tslint-loader"
-    }, {
       test: /\.s?[ac]ss$/,
       include: path.join(__dirname, "src"),
       exclude: /node_modules/,
@@ -55,13 +50,15 @@ const devConfig = merge({
       ]
     }]
   }
-}, base)
+}, base);
 
-new WebpackDevServer(webpack(devConfig), devConfig.devServer)
-  .listen(3000, (err) => {
-    if (err) {
-      return console.log(err)
-    }
+const server = new WebpackDevServer(webpack(devConfig), devConfig.devServer);
 
-    console.log("Listening on http://localhost:3000")
-  })
+server.listen(LISTEN_PORT, "0.0.0.0", (error) => {
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  console.log(`Listening on http://localhost:${LISTEN_PORT}`);
+});

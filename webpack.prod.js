@@ -1,9 +1,9 @@
-const merge = require("webpack-merge")
-const base = require("./webpack.base")
-const path = require("path")
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
+const merge = require("webpack-merge");
+const base = require("./webpack.base");
+const path = require("path");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = merge(base, {
   mode: "production",
@@ -48,4 +48,4 @@ module.exports = merge(base, {
       ]
     }]
   }
-})
+});
